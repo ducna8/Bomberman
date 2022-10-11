@@ -15,7 +15,7 @@ public class menu {
     Image image = new Image("Background/start.jpg");
     ImageView iv1 = new ImageView();
     iv1.setImage(image);
-
+    
     Label label = new Label("Press SPACE to start!!!");
 
 
