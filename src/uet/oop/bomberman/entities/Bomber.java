@@ -1,19 +1,67 @@
 package uet.oop.bomberman.entities;
 
-import javafx.scene.SnapshotParameters;
-import javafx.scene.canvas.GraphicsContext;
+import java.awt.event.KeyEvent;
 import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.paint.Color;
 
 public class Bomber extends Entity {
 
-    public Bomber(int x, int y, Image img) {
-        super( x, y, img);
+  int dx, dy;
+  private double speed = 0.5;
+  private boolean up, down, left, right;
+
+  public void update() {
+    if (down) {
+      dx += speed;
     }
 
-    @Override
-    public void update() {
-
+    if (right) {
+      dx -= speed;
     }
+    if (left) {
+      dy += speed;
+    }
+    if (up) {
+      dy -= speed;
+    }
+  }
+
+  public Bomber(int x, int y, Image img) {
+    super(x, y, img);
+  }
+
+  public void keyTyped(KeyEvent e) {
+
+  }
+
+  // Bấm
+  public void keyPressed(KeyEvent e) {
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+      right = true;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+      left = true;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+      down = true;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_UP) {
+      up = true;
+    }
+  }
+// Nhả
+
+  public void KeyRealeased(KeyEvent e) {
+    if (e.getKeyCode() == KeyEvent.VK_RIGHT) {
+      right = false;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_LEFT) {
+      left = false;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_DOWN) {
+      down = false;
+    }
+    if (e.getKeyCode() == KeyEvent.VK_UP) {
+      up = false;
+    }
+  }
 }
