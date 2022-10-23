@@ -15,6 +15,7 @@ public class Bomber extends Entity {
   public List<Image> toRight = new ArrayList<>();
   public List<Image> toUp = new ArrayList<>();
   public List<Image> toDown = new ArrayList<>();
+  public List<Image> dead = new ArrayList<>();
 
 
   public void update() {
@@ -52,7 +53,12 @@ public class Bomber extends Entity {
     toDown.add(Sprite.player_down_1.getFxImage());
     toDown.add(Sprite.player_down_2.getFxImage());
 
+    dead.add(Sprite.player_dead1.getFxImage());
+    dead.add(Sprite.player_dead2.getFxImage());
+    dead.add(Sprite.player_dead3.getFxImage());
   }
+
+
   @Override
   public void keyPressed(KeyEvent e) {
     int button = e.getKeyCode();

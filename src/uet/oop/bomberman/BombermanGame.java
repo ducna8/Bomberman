@@ -1,12 +1,21 @@
 package uet.oop.bomberman;
 
+import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
+import javafx.animation.FadeTransition;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
+
+import javafx.util.Duration;
 import uet.oop.bomberman.entities.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
@@ -20,6 +29,7 @@ public class BombermanGame extends Application {
 
     public static final int WIDTH = 20;
     public static final int HEIGHT = 15;
+    public static ImageView backgroundView;
 
     private GraphicsContext gc;
     private Canvas canvas;
@@ -37,15 +47,33 @@ public class BombermanGame extends Application {
         canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
+        Image background = new Image("background/start.jpg");
+        backgroundView = new ImageView(background);
+        backgroundView.setFitHeight(Sprite.SCALED_SIZE * HEIGHT -2);
+        backgroundView.setFitWidth(Sprite.SCALED_SIZE * WIDTH - 2);
+
+        Label pressSpace = new Label("Press SPACE to start <3");
+        pressSpace.setTextFill(Color.YELLOW);
+        pressSpace.setFont(new Font("Time New Roman", 30));
+        pressSpace.setTranslateY(Sprite.SCALED_SIZE * HEIGHT - 280);
+        pressSpace.setTranslateX((Sprite.SCALED_SIZE * WIDTH - 2) / 2 - 250);
+
+        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.5), pressSpace);
+        fadeTransition.setFromValue(0.0);
+        fadeTransition.setToValue(1.0);
+        fadeTransition.setCycleCount(Animation.INDEFINITE);
+        fadeTransition.play();
+
         // Tao root container
         Group root = new Group();
-        root.getChildren().add(canvas);
+        root.getChildren().addAll(canvas,backgroundView,pressSpace);
 
         // Tao scene
         Scene scene = new Scene(root);
 
         // Them scene vao stage
         stage.setScene(scene);
+        stage.setTitle("Bomberman nhom 86");
         stage.show();
 
         AnimationTimer timer = new AnimationTimer() {
