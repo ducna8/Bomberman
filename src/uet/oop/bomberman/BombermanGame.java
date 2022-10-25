@@ -4,6 +4,7 @@ import javafx.animation.Animation;
 import javafx.animation.AnimationTimer;
 import javafx.animation.FadeTransition;
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -11,12 +12,13 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javafx.util.Duration;
-import uet.oop.bomberman.entities.Bomber;
+import uet.oop.bomberman.entities.moblieEntity.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.Grass;
 import uet.oop.bomberman.entities.Wall;
@@ -49,8 +51,8 @@ public class BombermanGame extends Application {
 
         Image background = new Image("background/start.jpg");
         backgroundView = new ImageView(background);
-        backgroundView.setFitHeight(Sprite.SCALED_SIZE * HEIGHT -2);
-        backgroundView.setFitWidth(Sprite.SCALED_SIZE * WIDTH - 2);
+        backgroundView.setFitHeight(Sprite.SCALED_SIZE * HEIGHT);
+        backgroundView.setFitWidth(Sprite.SCALED_SIZE * WIDTH);
 
         Label pressSpace = new Label("Press SPACE to start <3");
         pressSpace.setTextFill(Color.YELLOW);
@@ -76,6 +78,15 @@ public class BombermanGame extends Application {
         stage.setTitle("Bomberman nhom 86");
         stage.show();
 
+        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
+            @Override
+            public void handle(KeyEvent event) {
+                switch (event.getCode()){
+                    case SPACE:
+                        render();
+                }
+            }
+        });
         AnimationTimer timer = new AnimationTimer() {
             @Override
             public void handle(long l) {
