@@ -37,8 +37,8 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-
-
+    public static final List<Entity> block = new ArrayList<>();
+    public static double[][] kill;
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
@@ -98,8 +98,8 @@ public class BombermanGame extends Application {
 
         createMap();
 
-        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-        entities.add(bomberman);
+//        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
+//        entities.add(bomberman);
     }
 
     public void createMap() {

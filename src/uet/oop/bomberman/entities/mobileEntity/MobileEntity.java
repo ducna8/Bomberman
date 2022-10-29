@@ -6,20 +6,15 @@ import uet.oop.bomberman.entities.Entity;
 public abstract class MobileEntity extends Entity {
 
   protected String direction = "";
-  protected int speed = 0;
-
   protected boolean dead = false;
-
-  protected int count = 0;
-
+  protected int countDead = 0;
+  protected int loop;
   protected boolean holdButton = false;
 
   public MobileEntity(int x, int y, Image img) {
     super(x, y, img);
   }
 
-  public MobileEntity() {
-  }
 
   public String getDirection() {
     return direction;
@@ -27,14 +22,6 @@ public abstract class MobileEntity extends Entity {
 
   public void setDirection(String direction) {
     this.direction = direction;
-  }
-
-  public int getSpeed() {
-    return speed;
-  }
-
-  public void setSpeed(int speed) {
-    this.speed = speed;
   }
 
   public boolean isDead() {
@@ -45,12 +32,12 @@ public abstract class MobileEntity extends Entity {
     this.dead = dead;
   }
 
-  public int getCount() {
-    return count;
+  public int getCountDead() {
+    return countDead;
   }
 
-  public void setCount(int count) {
-    this.count = count;
+  public void setCountDead(int count) {
+    this.countDead = countDead;
   }
 
   public boolean isHoldButton() {
@@ -61,7 +48,12 @@ public abstract class MobileEntity extends Entity {
     this.holdButton = holdButton;
   }
 
-  @Override
-  public void update() {
+  public int getLoop() {
+    return loop;
   }
+
+  public void setLoop(int loop) {
+    this.loop = loop;
+  }
+  public abstract void update();
 }

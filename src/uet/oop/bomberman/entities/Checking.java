@@ -1,0 +1,98 @@
+package uet.oop.bomberman.entities;
+
+import java.util.ArrayList;
+import java.util.List;
+import uet.oop.bomberman.entities.immobileEntity.immobileEntity;
+
+public class Checking {
+
+  public static List<immobileEntity> immobileEntities;
+
+
+  public static List<String> movable(double axisX, double axisY) {
+    List<String> list = new ArrayList<>();
+
+    double x = (double) Math.ceil(axisX * 100) / 100;
+    double y = (double) Math.ceil(axisY * 100) / 100;
+
+    list.add("left");
+    list.add("right");
+    list.add("up");
+    list.add("down");
+
+    for (int i = 0; i < immobileEntities.size() - 1; i++) {
+      if (immobileEntities.get(i).getX() == x - 1 && immobileEntities.get(i).getY() == y) {
+        list.remove("left");
+      }
+      if (immobileEntities.get(i).getX() == x + 1 && immobileEntities.get(i).getY() == y) {
+        list.remove("right");
+      }
+      if (immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() == y - 1) {
+        list.remove("up");
+      }
+      if (immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() == y + 1) {
+        list.remove("down");
+      }
+
+    }
+    return list;
+  }
+
+  public static boolean checkCollision(double aX, double aY, double range,double sizeEntity,String direction) {
+    double x = (double) Math.round(aX * 100) / 100;
+    double y = (double) Math.round(aY * 100) / 100;
+    for (int i = 0; i < immobileEntities.size(); i++) {
+
+      if (direction == "left") {
+        if ((immobileEntities.get(i).getY() > y - 1 && immobileEntities.get(i).getY() < y
+            && immobileEntities.get(i).getX() < x)
+            || (immobileEntities.get(i).getY() > y && immobileEntities.get(i).getY() < y + 1
+            && immobileEntities.get(i).getX() < x)
+            || (immobileEntities.get(i).getY() == y && immobileEntities.get(i).getX() < x)) {
+          if (((double) Math.round((x - 1 - range) * 100) / 100) < immobileEntities.get(i).getX()) {
+            return false;
+          }
+        }
+      }
+
+      if (direction == "right") {
+        if (((immobileEntities.get(i).getY() > y && immobileEntities.get(i).getY() < y + 1
+            && immobileEntities.get(i).getX() > x)
+            || immobileEntities.get(i).getY() > y - 1 && immobileEntities.get(i).getY() < y
+            && immobileEntities.get(i).getX() > x)
+            || (immobileEntities.get(i).getY() == y && immobileEntities.get(i).getX() > x)) {
+          if (((double) Math.round((x + 1 + range) * 100) / 100) > immobileEntities.get(i).getX()) {
+            return false;
+          }
+        }
+      }
+
+      if (direction == "up") {
+        if ((immobileEntities.get(i).getX() < x + 1
+            && immobileEntities.get(i).getX() > x && immobileEntities.get(i).getY() < y) || (
+            immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() < y) || (
+            immobileEntities.get(i).getX() > x - 1 && immobileEntities.get(i).getX() < x
+                && immobileEntities.get(i).getY() < y)) {
+          if (y - range - 1 < immobileEntities.get(i).getY()) {
+            return false;
+          }
+        }
+      }
+      if (direction == "down") {
+        if ((immobileEntities.get(i).getX() > x - 1 && immobileEntities.get(i).getX() < x
+            && immobileEntities.get(i).getY() > y) || (immobileEntities.get(i).getX() < x + 1
+            && immobileEntities.get(i).getX() > x && immobileEntities.get(i).getY() > y) || (
+            immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() > y)) {
+          if (y + range + 1 > immobileEntities.get(i).getY()) {
+            return false;
+          }
+        }
+
+      }
+    }
+    return true;
+  }
+
+}
+
+
