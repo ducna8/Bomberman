@@ -20,8 +20,8 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import uet.oop.bomberman.entities.moblieEntity.Bomber;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.Grass;
-import uet.oop.bomberman.entities.Wall;
+import uet.oop.bomberman.entities.immobileEntity.Grass;
+import uet.oop.bomberman.entities.immobileEntity.Wall;
 import uet.oop.bomberman.graphics.Sprite;
 
 import java.util.ArrayList;
