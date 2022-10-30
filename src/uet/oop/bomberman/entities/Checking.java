@@ -3,6 +3,7 @@ package uet.oop.bomberman.entities;
 import java.util.ArrayList;
 import java.util.List;
 import uet.oop.bomberman.entities.immobileEntity.immobileEntity;
+import uet.oop.bomberman.entities.mobileEntity.Bomber;
 import uet.oop.bomberman.entities.mobileEntity.MobileEntity;
 
 public class Checking {
@@ -10,6 +11,8 @@ public class Checking {
   public static List<immobileEntity> immobileEntities;
   public static List<MobileEntity> mobileEntities;
   public static List<immobileEntity> renderImmobileEntities;
+
+  public Bomber bomberBaby;
 
 
   public static List<String> movable(double axisX, double axisY) {
@@ -103,12 +106,28 @@ public class Checking {
     double X2 = (double) Math.round(y1 * 100) / 100;
     double Y2 = (double) Math.round(y2 * 100) / 100;
 
+    if (X2 + 1 > X1 && X2 <= X1 && Y2 + 1 > Y1 && Y2 <= Y1) {
+      return true;
+    } else if (X2 - 1 < X1 && X2 >= X1 && Y2 - 1 < Y1 && Y2 >= Y1) {
+      return true;
+    } else if (X2 + 1 > X1 && X2 <= X1 && Y2 - 1 < Y1 && Y2 >= Y1) {
+      return true;
+    } else if (X2 - 1 < X1 && X2 >= X1 && Y2 + 1 > Y1 && Y2 <= Y1) {
+      return true;
+    } else {
+      return false;
+    }
+
   }
 
-  public void collisionEnemy(double axisX, double axisY) {
+  public boolean collisionEnemy(double axisX, double axisY) {
     for (int i = 0; i < mobileEntities.size(); i++) {
-      if (Collision(axisX, axisY, mobileEntities.get(i).getY() == true, )
+      if (Collision(axisX, axisY, mobileEntities.get(i).getX(), mobileEntities.get(i).getY())
+          && !(mobileEntities.get(i) instanceof Bomber)){
+        return true;
+      }
     }
+    return false;
   }
 
 }

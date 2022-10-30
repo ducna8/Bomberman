@@ -59,83 +59,86 @@ public class Bomber extends MobileEntity {
     super.setHoldButton(holdButton);
   }
 
-    public void distance(double distance) {
-        this.distance = distance;
-        this.x = (int) x;
-        this.y = (int) y;
-    }
+  public void distance(double distance) {
+    this.distance = distance;
+    this.x = (int) x;
+    this.y = (int) y;
+  }
 
-    public Image BomberToUp() {
-      if (img == toUp.get(0)) {
-          return toUp.get(1);
-      } else if (img == toUp.get(1)) {
-          return toUp.get(2);
-      } else if (img == toUp.get(2)) {
-          return toUp.get(0);
-      }
+  public Image BomberToUp() {
+    if (img == toUp.get(0)) {
+      return toUp.get(1);
+    } else if (img == toUp.get(1)) {
+      return toUp.get(2);
+    } else if (img == toUp.get(2)) {
+      return toUp.get(0);
+    }
     return toUp.get(0);
   }
 
   public Image BomberToDown() {
-      if (img == toDown.get(0)) {
-          return toDown.get(1);
-      } else if (img == toDown.get(1)) {
-          return toDown.get(2);
-      } else if (img == toDown.get(2)) {
-          return toDown.get(0);
-      }
+    if (img == toDown.get(0)) {
+      return toDown.get(1);
+    } else if (img == toDown.get(1)) {
+      return toDown.get(2);
+    } else if (img == toDown.get(2)) {
+      return toDown.get(0);
+    }
     return toDown.get(0);
   }
 
   public Image BomberToLeft() {
-      if (img == toLeft.get(0)) {
-          return toLeft.get(1);
-      } else if (img == toLeft.get(1)) {
-          return toLeft.get(2);
-      } else if (img == toLeft.get(2)) {
-          return toLeft.get(0);
-      }
+    if (img == toLeft.get(0)) {
+      return toLeft.get(1);
+    } else if (img == toLeft.get(1)) {
+      return toLeft.get(2);
+    } else if (img == toLeft.get(2)) {
+      return toLeft.get(0);
+    }
     return toLeft.get(0);
   }
 
   public Image BomberToRight() {
-      if (img == toRight.get(0)) {
-          return toRight.get(1);
-      } else if (img == toRight.get(1)) {
-          return toRight.get(2);
-      } else if (img == toRight.get(2)) {
-          return toRight.get(0);
-      }
+    if (img == toRight.get(0)) {
+      return toRight.get(1);
+    } else if (img == toRight.get(1)) {
+      return toRight.get(2);
+    } else if (img == toRight.get(2)) {
+      return toRight.get(0);
+    }
     return toRight.get(0);
   }
 
   public Image BomberToDead() {
-      if (img == toDead.get(0)) {
-          return toDead.get(1);
-      } else if (img == toDead.get(1)) {
-          return toDead.get(2);
-      } else if (img == toDead.get(2)) {
-          return toDead.get(0);
-      }
+    if (img == toDead.get(0)) {
+      return toDead.get(1);
+    } else if (img == toDead.get(1)) {
+      return toDead.get(2);
+    } else if (img == toDead.get(2)) {
+      return toDead.get(0);
+    }
     return toDead.get(0);
   }
 
   public void update() {
-      if (Checking.Collision)
+    if (Checking.CollisionMove(x, y) == true) {
+      setDead(true);
+    }
     if (dead = true) {
       img = BomberToDead();
     } else {
-        if (direction == "up" && holdButton == true) {
-            img = BomberToUp();
-        }
-        if (direction == "down" && holdButton == true) {
-            img = BomberToDown();
-        }
-        if (direction == "left" && holdButton == true) {
-            img = BomberToLeft();
-        }
-      if (direction == "right" && holdButton == true)
+      if (direction == "up" && holdButton == true) {
+        img = BomberToUp();
+      }
+      if (direction == "down" && holdButton == true) {
+        img = BomberToDown();
+      }
+      if (direction == "left" && holdButton == true) {
+        img = BomberToLeft();
+      }
+      if (direction == "right" && holdButton == true) {
         img = BomberToRight();
+      }
     }
   }
 
