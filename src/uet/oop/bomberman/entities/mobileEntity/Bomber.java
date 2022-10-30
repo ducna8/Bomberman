@@ -59,7 +59,7 @@ public class Bomber extends MobileEntity {
     super.setHoldButton(holdButton);
   }
 
-  public void distance(double distance) {
+  public void setDistance(double distance) {
     this.distance = distance;
     this.x = (int) x;
     this.y = (int) y;

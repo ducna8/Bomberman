@@ -2,7 +2,13 @@ package uet.oop.bomberman.entities;
 
 import java.util.ArrayList;
 import java.util.List;
+import uet.oop.bomberman.entities.bomb.Bomb;
+import uet.oop.bomberman.entities.bomb.BombExplosion;
 import uet.oop.bomberman.entities.immobileEntity.immobileEntity;
+import uet.oop.bomberman.entities.items.bombItem;
+import uet.oop.bomberman.entities.items.flameItem;
+import uet.oop.bomberman.entities.items.item;
+import uet.oop.bomberman.entities.items.speedItem;
 import uet.oop.bomberman.entities.mobileEntity.Bomber;
 import uet.oop.bomberman.entities.mobileEntity.MobileEntity;
 
@@ -13,8 +19,11 @@ public class Checking {
   public static List<immobileEntity> renderImmobileEntities;
   public static boolean collisionEnemy;
 
+  public static List<item> items;
+  public static int bomberLive;
   public Bomber bomberBaby;
-
+  public static Bomb bomb;
+  public static int[] bombExplosionReal;
 
   public static List<String> movable(double axisX, double axisY) {
     List<String> list = new ArrayList<>();
@@ -49,49 +58,49 @@ public class Checking {
       String direction) {
     double x = (double) Math.round(aX * 100) / 100;
     double y = (double) Math.round(aY * 100) / 100;
-    for (int i = 0; i < immobileEntities.size(); i++) {
+    for (uet.oop.bomberman.entities.immobileEntity.immobileEntity immobileEntity : immobileEntities) {
 
       if (direction == "left") {
-        if ((immobileEntities.get(i).getY() > y - 1 && immobileEntities.get(i).getY() < y
-            && immobileEntities.get(i).getX() < x)
-            || (immobileEntities.get(i).getY() > y && immobileEntities.get(i).getY() < y + 1
-            && immobileEntities.get(i).getX() < x)
-            || (immobileEntities.get(i).getY() == y && immobileEntities.get(i).getX() < x)) {
-          if (((double) Math.round((x - 1 - range) * 100) / 100) < immobileEntities.get(i).getX()) {
+        if ((immobileEntity.getY() > y - 1 && immobileEntity.getY() < y
+            && immobileEntity.getX() < x)
+            || (immobileEntity.getY() > y && immobileEntity.getY() < y + 1
+            && immobileEntity.getX() < x)
+            || (immobileEntity.getY() == y && immobileEntity.getX() < x)) {
+          if (((double) Math.round((x - 1 - range) * 100) / 100) < immobileEntity.getX()) {
             return false;
           }
         }
       }
 
       if (direction == "right") {
-        if (((immobileEntities.get(i).getY() > y && immobileEntities.get(i).getY() < y + 1
-            && immobileEntities.get(i).getX() > x)
-            || immobileEntities.get(i).getY() > y - 1 && immobileEntities.get(i).getY() < y
-            && immobileEntities.get(i).getX() > x)
-            || (immobileEntities.get(i).getY() == y && immobileEntities.get(i).getX() > x)) {
-          if (((double) Math.round((x + 1 + range) * 100) / 100) > immobileEntities.get(i).getX()) {
+        if (((immobileEntity.getY() > y && immobileEntity.getY() < y + 1
+            && immobileEntity.getX() > x)
+            || immobileEntity.getY() > y - 1 && immobileEntity.getY() < y
+            && immobileEntity.getX() > x)
+            || (immobileEntity.getY() == y && immobileEntity.getX() > x)) {
+          if (((double) Math.round((x + 1 + range) * 100) / 100) > immobileEntity.getX()) {
             return false;
           }
         }
       }
 
       if (direction == "up") {
-        if ((immobileEntities.get(i).getX() < x + 1
-            && immobileEntities.get(i).getX() > x && immobileEntities.get(i).getY() < y) || (
-            immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() < y) || (
-            immobileEntities.get(i).getX() > x - 1 && immobileEntities.get(i).getX() < x
-                && immobileEntities.get(i).getY() < y)) {
-          if (y - range - 1 < immobileEntities.get(i).getY()) {
+        if ((immobileEntity.getX() < x + 1
+            && immobileEntity.getX() > x && immobileEntity.getY() < y) || (
+            immobileEntity.getX() == x && immobileEntity.getY() < y) || (
+            immobileEntity.getX() > x - 1 && immobileEntity.getX() < x
+                && immobileEntity.getY() < y)) {
+          if (y - range - 1 < immobileEntity.getY()) {
             return false;
           }
         }
       }
       if (direction == "down") {
-        if ((immobileEntities.get(i).getX() > x - 1 && immobileEntities.get(i).getX() < x
-            && immobileEntities.get(i).getY() > y) || (immobileEntities.get(i).getX() < x + 1
-            && immobileEntities.get(i).getX() > x && immobileEntities.get(i).getY() > y) || (
-            immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() > y)) {
-          if (y + range + 1 > immobileEntities.get(i).getY()) {
+        if ((immobileEntity.getX() > x - 1 && immobileEntity.getX() < x
+            && immobileEntity.getY() > y) || (immobileEntity.getX() < x + 1
+            && immobileEntity.getX() > x && immobileEntity.getY() > y) || (
+            immobileEntity.getX() == x && immobileEntity.getY() > y)) {
+          if (y + range + 1 > immobileEntity.getY()) {
             return false;
           }
         }
@@ -122,15 +131,42 @@ public class Checking {
   }
 
   public static boolean collisionEnemy(double axisX, double axisY) {
-    for (int i = 0; i < mobileEntities.size(); i++) {
-      if (Collision(axisX, axisY, mobileEntities.get(i).getX(), mobileEntities.get(i).getY())
-          && !(mobileEntities.get(i) instanceof Bomber)){
+    for (MobileEntity mobileEntity : mobileEntities) {
+      if (Collision(axisX, axisY, mobileEntity.getX(), mobileEntity.getY())
+          && !(mobileEntity instanceof Bomber)) {
         return true;
       }
     }
     return false;
   }
 
+  public static void collisionBomb(double axisX, double axisY) {
+    for (MobileEntity mobileEntity : mobileEntities) {
+      if (Collision(axisX, axisY, mobileEntity.getX(), mobileEntity.getY())) {
+        mobileEntity.setDead(true);
+      }
+    }
+  }
+
+  public void collisionItem(double axisX, double axisY) {
+    for (uet.oop.bomberman.entities.items.item item : items) {
+      if (Collision(bomberBaby.getX(), bomberBaby.getY(), item.getX(),
+          item.getY())) {
+        if (item instanceof speedItem) {
+          bomberBaby.setDistance(1.0);
+          item.setTransform(false);
+        }
+        if (item instanceof bombItem) {
+          Bomb.countBomb = 2;
+          item.setTransform(false);
+        }
+        if (item instanceof flameItem) {
+          bomberLive += 1;
+          item.setTransform(false);
+        }
+      }
+    }
+  }
 }
 
 
