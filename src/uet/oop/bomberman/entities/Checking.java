@@ -3,17 +3,20 @@ package uet.oop.bomberman.entities;
 import java.util.ArrayList;
 import java.util.List;
 import uet.oop.bomberman.entities.immobileEntity.immobileEntity;
+import uet.oop.bomberman.entities.mobileEntity.MobileEntity;
 
 public class Checking {
 
   public static List<immobileEntity> immobileEntities;
+  public static List<MobileEntity> mobileEntities;
+  public static List<immobileEntity> renderImmobileEntities;
 
 
   public static List<String> movable(double axisX, double axisY) {
     List<String> list = new ArrayList<>();
 
-    double x = (double) Math.ceil(axisX * 100) / 100;
-    double y = (double) Math.ceil(axisY * 100) / 100;
+    double x = Math.ceil(axisX * 100) / 100;
+    double y = Math.ceil(axisY * 100) / 100;
 
     list.add("left");
     list.add("right");
@@ -38,7 +41,8 @@ public class Checking {
     return list;
   }
 
-  public static boolean checkCollision(double aX, double aY, double range,double sizeEntity,String direction) {
+  public static boolean CollisionMove(double aX, double aY, double range, double sizeEntity,
+      String direction) {
     double x = (double) Math.round(aX * 100) / 100;
     double y = (double) Math.round(aY * 100) / 100;
     for (int i = 0; i < immobileEntities.size(); i++) {
@@ -91,6 +95,20 @@ public class Checking {
       }
     }
     return true;
+  }
+
+  public boolean Collision(double x1, double y1, double x2, double y2) {
+    double X1 = (double) Math.round(x1 * 100) / 100;
+    double Y1 = (double) Math.round(x2 * 100) / 100;
+    double X2 = (double) Math.round(y1 * 100) / 100;
+    double Y2 = (double) Math.round(y2 * 100) / 100;
+
+  }
+
+  public void collisionEnemy(double axisX, double axisY) {
+    for (int i = 0; i < mobileEntities.size(); i++) {
+      if (Collision(axisX, axisY, mobileEntities.get(i).getY() == true, )
+    }
   }
 
 }

@@ -11,6 +11,7 @@ public abstract class MobileEntity extends Entity {
   protected int loop;
   protected boolean holdButton = false;
 
+
   public MobileEntity(int x, int y, Image img) {
     super(x, y, img);
   }

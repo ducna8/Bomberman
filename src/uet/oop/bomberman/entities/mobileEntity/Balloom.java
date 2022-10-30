@@ -49,7 +49,7 @@ public class Balloom extends MobileEntity {
   }
 
   public Image balloomToLeft() {
-    if (Checking.checkCollision(x, y, 0.2, 1, "left") && x > 0) {
+    if (Checking.CollisionMove(x, y, 0.2, 1, "left") && x > 0) {
       x = (double) Math.round((x - 0.2) * 10) / 10;
     }
     if (img == toLeft.get(0)) {
@@ -64,7 +64,7 @@ public class Balloom extends MobileEntity {
   }
 
   public Image balloomToRight() {
-    if (Checking.checkCollision(x, y, 0.2, 1, "right") && x < BombermanGame.WIDTH) {
+    if (Checking.CollisionMove(x, y, 0.2, 1, "right") && x < BombermanGame.WIDTH) {
       x = (double) Math.round((x + 0.2) * 10) / 10;
     }
     if (img == toRight.get(0)) {
@@ -79,7 +79,7 @@ public class Balloom extends MobileEntity {
   }
 
   public Image balloomToUp() {
-    if (Checking.checkCollision(x, y, 0.2, 1, "up") && y > 0) {
+    if (Checking.CollisionMove(x, y, 0.2, 1, "up") && y > 0) {
       x = (double) Math.round((y - 0.2) * 10) / 10;
     }
     if (img == toUp.get(0)) {
@@ -94,7 +94,7 @@ public class Balloom extends MobileEntity {
   }
 
   public Image balloomToDown() {
-    if (Checking.checkCollision(x, y, 0.2, 1, "down") && y < BombermanGame.HEIGHT) {
+    if (Checking.CollisionMove(x, y, 0.2, 1, "down") && y < BombermanGame.HEIGHT) {
       x = (double) Math.round((y + 0.2) * 10) / 10;
     }
     if (img == toDown.get(0)) {

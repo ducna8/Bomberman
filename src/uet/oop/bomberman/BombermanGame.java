@@ -18,7 +18,7 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import javafx.util.Duration;
-import uet.oop.bomberman.entities.moblieEntity.Bomber;
+//import uet.oop.bomberman.entities.moblieEntity.Bomber;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.entities.immobileEntity.Grass;
 import uet.oop.bomberman.entities.immobileEntity.Wall;
@@ -37,8 +37,7 @@ public class BombermanGame extends Application {
     private Canvas canvas;
     private List<Entity> entities = new ArrayList<>();
     private List<Entity> stillObjects = new ArrayList<>();
-    public static final List<Entity> block = new ArrayList<>();
-    public static double[][] kill;
+
     public static void main(String[] args) {
         Application.launch(BombermanGame.class);
     }
