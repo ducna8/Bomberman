@@ -121,7 +121,7 @@ public class Bomber extends MobileEntity {
   }
 
   public void update() {
-    if (Checking.CollisionMove(x, y) == true) {
+    if (Checking.collisionEnemy(x, y)) {
       setDead(true);
     }
     if (dead = true) {

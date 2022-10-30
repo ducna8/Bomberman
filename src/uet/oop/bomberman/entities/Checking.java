@@ -11,6 +11,7 @@ public class Checking {
   public static List<immobileEntity> immobileEntities;
   public static List<MobileEntity> mobileEntities;
   public static List<immobileEntity> renderImmobileEntities;
+  public static boolean collisionEnemy;
 
   public Bomber bomberBaby;
 
@@ -100,7 +101,7 @@ public class Checking {
     return true;
   }
 
-  public boolean Collision(double x1, double y1, double x2, double y2) {
+  public static boolean Collision(double x1, double y1, double x2, double y2) {
     double X1 = (double) Math.round(x1 * 100) / 100;
     double Y1 = (double) Math.round(x2 * 100) / 100;
     double X2 = (double) Math.round(y1 * 100) / 100;
@@ -120,7 +121,7 @@ public class Checking {
 
   }
 
-  public boolean collisionEnemy(double axisX, double axisY) {
+  public static boolean collisionEnemy(double axisX, double axisY) {
     for (int i = 0; i < mobileEntities.size(); i++) {
       if (Collision(axisX, axisY, mobileEntities.get(i).getX(), mobileEntities.get(i).getY())
           && !(mobileEntities.get(i) instanceof Bomber)){
