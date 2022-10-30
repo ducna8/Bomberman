@@ -3,7 +3,6 @@ package uet.oop.bomberman.entities;
 import java.util.ArrayList;
 import java.util.List;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.bomb.BombExplosion;
 import uet.oop.bomberman.entities.immobileEntity.immobileEntity;
 import uet.oop.bomberman.entities.items.bombItem;
 import uet.oop.bomberman.entities.items.flameItem;
@@ -21,9 +20,9 @@ public class Checking {
 
   public static List<item> items;
   public static int bomberLive;
-  public Bomber bomberBaby;
   public static Bomb bomb;
   public static int[] bombExplosionReal;
+  public static Bomber bomberBaby;
 
   public static List<String> movable(double axisX, double axisY) {
     List<String> list = new ArrayList<>();
@@ -167,6 +166,35 @@ public class Checking {
       }
     }
   }
+  public static boolean checkEmpty(double a, double b, double i) {
+    return (a < i && i < b) || (a > i && i > b);
+  }
+
+  public boolean checkVertical(double x, double y){
+    for (MobileEntity mobileEntity : mobileEntities) {
+      double notMoveX = mobileEntity.getX();
+      double notMoveY = mobileEntity.getY();
+      double bomberY = Checking.bomberBaby.getY();
+      if (notMoveX == x && checkEmpty(bomberY, y, notMoveY)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public boolean checkHorizontal(double x, double y){
+    for (MobileEntity mobileEntity : mobileEntities) {
+      double notMoveX = mobileEntity.getX();
+      double notMoveY = mobileEntity.getY();
+      double bomberY = Checking.bomberBaby.getX();
+      if (notMoveX == x && checkEmpty(bomberY, y, notMoveY)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+
 }
 
 
