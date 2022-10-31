@@ -170,7 +170,7 @@ public class Checking {
     return (a < i && i < b) || (a > i && i > b);
   }
 
-  public boolean checkVertical(double x, double y){
+  public static boolean checkVertical(double x, double y){
     for (MobileEntity mobileEntity : mobileEntities) {
       double notMoveX = mobileEntity.getX();
       double notMoveY = mobileEntity.getY();
@@ -182,7 +182,7 @@ public class Checking {
     return true;
   }
 
-  public boolean checkHorizontal(double x, double y){
+  public static boolean checkHorizontal(double x, double y){
     for (MobileEntity mobileEntity : mobileEntities) {
       double notMoveX = mobileEntity.getX();
       double notMoveY = mobileEntity.getY();

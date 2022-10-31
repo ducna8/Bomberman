@@ -16,6 +16,7 @@ public class Balloom extends MobileEntity {
   public List<Image> toDown = new ArrayList<>();
   public List<Image> toDead = new ArrayList<>();
 
+
   public Balloom(int x, int y, Image img) {
 
     super(x, y, img);
@@ -30,13 +31,13 @@ public class Balloom extends MobileEntity {
     toRight.add(Sprite.balloom_right2.getFxImage());
     toRight.add(Sprite.balloom_right3.getFxImage());
 
-    toUp.add(Sprite.balloom_right1.getFxImage());
-    toUp.add(Sprite.balloom_right2.getFxImage());
-    toUp.add(Sprite.balloom_right3.getFxImage());
+    toUp.add(Sprite.balloom_left1.getFxImage());
+    toUp.add(Sprite.balloom_left2.getFxImage());
+    toUp.add(Sprite.balloom_left3.getFxImage());
 
-    toDown.add(Sprite.balloom_left1.getFxImage());
-    toDown.add(Sprite.balloom_left2.getFxImage());
-    toDown.add(Sprite.balloom_left3.getFxImage());
+    toDown.add(Sprite.balloom_right1.getFxImage());
+    toDown.add(Sprite.balloom_right2.getFxImage());
+    toDown.add(Sprite.balloom_right3.getFxImage());
 
     toDead.add(Sprite.balloom_dead.getFxImage());
   }
@@ -123,23 +124,23 @@ public class Balloom extends MobileEntity {
       loop += 1;
     }
 
-    if (direction == "left") {
+    if (direction.equals("left")) {
       img = balloomToLeft();
     }
-    if (direction == "right") {
+    if (direction.equals("right")) {
       img = balloomToRight();
     }
-    if (direction == "up") {
+    if (direction.equals("up")) {
       img = balloomToUp();
     }
-    if (direction == "down") {
+    if (direction.equals("down")) {
       img = balloomToDown();
     }
   }
 
   @Override
   public void update() {
-    if (dead = true) {
+    if (dead) {
       countDead += 1;
       if (countDead <= 12) {
         img = balloomToDead();
