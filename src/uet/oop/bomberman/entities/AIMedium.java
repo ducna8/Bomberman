@@ -1,4 +1,4 @@
-package com.carlosflorencio.bomberman.entities.mob.enemy.ai;
+package uet.oop.bomberman.entities.ai;
 
 import com.carlosflorencio.bomberman.entities.mob.Player;
 import com.carlosflorencio.bomberman.entities.mob.enemy.Enemy;
