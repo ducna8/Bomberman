@@ -1,128 +1,167 @@
 package uet.oop.bomberman;
 
-import javafx.animation.Animation;
-import javafx.animation.AnimationTimer;
-import javafx.animation.FadeTransition;
-import javafx.application.Application;
-import javafx.event.EventHandler;
-import javafx.scene.Group;
-import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.canvas.GraphicsContext;
-import javafx.scene.input.KeyEvent;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
-
-import javafx.util.Duration;
-//import uet.oop.bomberman.entities.moblieEntity.Bomber;
-import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.entities.immobileEntity.Grass;
-import uet.oop.bomberman.entities.immobileEntity.Wall;
-import uet.oop.bomberman.graphics.Sprite;
-
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
+import javafx.animation.AnimationTimer;
+import javafx.application.Application;
+import javafx.scene.canvas.GraphicsContext;
+import javafx.stage.Stage;
+import uet.oop.bomberman.Menu.Menu;
+import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.entities.bomb.BombExplosion;
+import uet.oop.bomberman.entities.immobileEntity.Brick;
+import uet.oop.bomberman.entities.immobileEntity.immobileEntity;
+import uet.oop.bomberman.entities.items.item;
+import uet.oop.bomberman.entities.mobileEntity.MobileEntity;
+import uet.oop.bomberman.graphics.CreateMap;
+import uet.oop.bomberman.Menu.menu;
+
 
 public class BombermanGame extends Application {
 
-    public static final int WIDTH = 20;
-    public static final int HEIGHT = 15;
-    public static ImageView backgroundView;
+  public static final int WIDTH = 35;
+  public static final int HEIGHT = 20;
+//  public static ImageView backgroundView;
+  public static GraphicsContext gc;
+  public static Stage screen;
+  public static int key = 0;
 
-    private GraphicsContext gc;
-    private Canvas canvas;
-    private List<Entity> entities = new ArrayList<>();
-    private List<Entity> stillObjects = new ArrayList<>();
+  public static List<MobileEntity> mobileEntities;
+  public static List<immobileEntity> immobileEntities;
+  public static List<immobileEntity> renderImmobileEntities;
+  public static List<BombExplosion> bombExplosions;
+  public static List<item> item;
 
-    public static void main(String[] args) {
-        Application.launch(BombermanGame.class);
+
+
+
+  public static void main(String[] args) {
+    Application.launch(BombermanGame.class);
+  }
+
+  public static void removeRender() {
+    if (mobileEntities != null) {
+      if (mobileEntities.size() != 0) {
+        for (int i =0; i < mobileEntities.size(); i++) {
+          gc.clearRect(32 * mobileEntities.get(i).getX(), 32 * mobileEntities.get(i).getY(), 32,
+              32);
+        }
+      }
     }
+
+    if (renderImmobileEntities != null) {
+      if (renderImmobileEntities.size() != 0) {
+        for (immobileEntity renderImmobileEntity : renderImmobileEntities) {
+          if (renderImmobileEntity instanceof Brick
+              && renderImmobileEntity.isDifference(true)) {
+            gc.clearRect(32 * renderImmobileEntity.getX(),
+                32 * renderImmobileEntity.getY(), 32, 32);
+          }
+        }
+      }
+    }
+
+    if (bombExplosions != null) {
+      for (BombExplosion bombExplosion : bombExplosions) {
+        gc.clearRect(32 * bombExplosion.getX(), 32 * bombExplosion.getY(), 32, 32);
+      }
+    }
+    if (item != null) {
+      for (uet.oop.bomberman.entities.items.item value : item) {
+        if (value.isTransform()) {
+          gc.clearRect(32 * value.getX(), 32 * value.getY(), 32, 32);
+        }
+      }
+    }
+  }
+
+public abstract class AnimationTimerExt extends AnimationTimer {
+
+  private long sleepNs = 0;
+
+  long prevTime = 0;
+
+  public AnimationTimerExt(long sleepMs) {
+    this.sleepNs = sleepMs * 500000;
+  }
+
+  @Override
+  public void handle(long now) {
+    // some delay
+    if ((now - prevTime) < sleepNs) {
+
+      return;
+    }
+    prevTime = now;
+    handle();
+  }
+
+  public abstract void handle();
+
+}
 
     @Override
-    public void start(Stage stage) {
-        // Tao Canvas
-        canvas = new Canvas(Sprite.SCALED_SIZE * WIDTH, Sprite.SCALED_SIZE * HEIGHT);
-        gc = canvas.getGraphicsContext2D();
+    public void start (Stage stage) throws IOException {
+      screen = stage;
+      new Menu();
+      screen.setTitle("BomberMan nhom 86");
+      screen.show();
 
-        Image background = new Image("background/start.jpg");
-        backgroundView = new ImageView(background);
-        backgroundView.setFitHeight(Sprite.SCALED_SIZE * HEIGHT);
-        backgroundView.setFitWidth(Sprite.SCALED_SIZE * WIDTH);
-
-        Label pressSpace = new Label("Press SPACE to start <3");
-        pressSpace.setTextFill(Color.YELLOW);
-        pressSpace.setFont(new Font("Time New Roman", 30));
-        pressSpace.setTranslateY(Sprite.SCALED_SIZE * HEIGHT - 280);
-        pressSpace.setTranslateX((Sprite.SCALED_SIZE * WIDTH - 2) / 2 - 250);
-
-        FadeTransition fadeTransition = new FadeTransition(Duration.seconds(1.5), pressSpace);
-        fadeTransition.setFromValue(0.0);
-        fadeTransition.setToValue(1.0);
-        fadeTransition.setCycleCount(Animation.INDEFINITE);
-        fadeTransition.play();
-
-        // Tao root container
-        Group root = new Group();
-        root.getChildren().addAll(canvas,backgroundView,pressSpace);
-
-        // Tao scene
-        Scene scene = new Scene(root);
-
-        // Them scene vao stage
-        stage.setScene(scene);
-        stage.setTitle("Bomberman nhom 86");
-        stage.show();
-
-        scene.setOnKeyPressed(new EventHandler<KeyEvent>() {
-            @Override
-            public void handle(KeyEvent event) {
-                switch (event.getCode()){
-                    case SPACE:
-                        render();
-                }
+      AnimationTimerExt timer = new AnimationTimerExt(100) {
+        @Override
+        public void handle() {
+          if (key != 0) {
+            removeRender();
+            update();
+            render();
+            try {
+              CreateMap.deleteEntity();
+            } catch (IOException e) {
+              e.printStackTrace();
             }
-        });
-        AnimationTimer timer = new AnimationTimer() {
-            @Override
-            public void handle(long l) {
-                render();
-                update();
+            if (CreateMap.bomberLive == 0) {
+              CreateMap.createMap = null;
+//              GameOver.go = new GameOver();
+//              mediaPlayer.mediaBackgroundPlayer.stop();
             }
-        };
-        timer.start();
-
-        createMap();
-
-//        Entity bomberman = new Bomber(1, 1, Sprite.player_right.getFxImage());
-//        entities.add(bomberman);
-    }
-
-    public void createMap() {
-        for (int i = 0; i < WIDTH; i++) {
-            for (int j = 0; j < HEIGHT; j++) {
-                Entity object;
-                if (j == 0 || j == HEIGHT - 1 || i == 0 || i == WIDTH - 1) {
-                    object = new Wall(i, j, Sprite.wall.getFxImage());
-                }
-                else {
-                    object = new Grass(i, j, Sprite.grass.getFxImage());
-                }
-                stillObjects.add(object);
-            }
+            screen.setTitle("Live: " + CreateMap.bomberLive);
+          }
         }
+      };
+      timer.start();
     }
 
-    public void update() {
-        entities.forEach(Entity::update);
+  public void update() {
+    if(key !=0){
+        immobileEntities = CreateMap.immobileEntities;
+        renderImmobileEntities = CreateMap.renderImmobileEntities;
+        mobileEntities = CreateMap.mobileEntities;
+        bombExplosions = CreateMap.bombExplosions;
+        item = CreateMap.item;
+        immobileEntities.forEach(Entity::update);
+        renderImmobileEntities.forEach(Entity::update);
+        mobileEntities.forEach(Entity::update);
+        bombExplosions.forEach(Entity::update);
+        item.forEach(Entity::update);
     }
+  }
 
-    public void render() {
-        gc.clearRect(0, 0, canvas.getWidth(), canvas.getHeight());
-        stillObjects.forEach(g -> g.render(gc));
-        entities.forEach(g -> g.render(gc));
+  public void render() {
+    if(key !=0){
+      if(key == 1){
+        mobileEntities.forEach(g -> g.render(gc));
+        key +=1;
+      }
+      if(renderImmobileEntities != null){
+        renderImmobileEntities.forEach(g->g.render(gc));
+      }
+      if(item != null){
+        item.forEach(g -> g.render(gc));
+        mobileEntities.forEach(g -> g.render(gc));
+      }
+      if(bombExplosions != null){
+        bombExplosions.forEach(g -> g.render(gc));
+      }
     }
+  }
 }

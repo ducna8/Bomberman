@@ -11,7 +11,7 @@ public abstract class immobileEntity extends Entity {
     super(x,y,img);
   }
 
-  public boolean isDifference() {
+  public boolean isDifference(boolean difference) {
     return difference;
   }
 

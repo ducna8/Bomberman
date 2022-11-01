@@ -7,14 +7,14 @@ import uet.oop.bomberman.entities.Checking;
 import uet.oop.bomberman.entities.Entity;
 import uet.oop.bomberman.graphics.Sprite;
 
-public class Bomb extends Entity {
+public class Bomb extends BombExplosion {
 
   public List<Image> smallBomb = new ArrayList<>();
   public List<Image> biggerBomb = new ArrayList<>();
   public List<Image> explodedBomb = new ArrayList<>();
 
   public static int countBomb = 1;
-  public boolean exploded = false;
+  public static boolean exploded = false;
 
   public int timeDelay = 0;
   public int timeExploded = 0;

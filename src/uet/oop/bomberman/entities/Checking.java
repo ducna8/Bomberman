@@ -3,22 +3,20 @@ package uet.oop.bomberman.entities;
 import java.util.ArrayList;
 import java.util.List;
 import uet.oop.bomberman.entities.bomb.Bomb;
-import uet.oop.bomberman.entities.immobileEntity.immobileEntity;
 import uet.oop.bomberman.entities.items.bombItem;
 import uet.oop.bomberman.entities.items.flameItem;
-import uet.oop.bomberman.entities.items.item;
 import uet.oop.bomberman.entities.items.speedItem;
 import uet.oop.bomberman.entities.mobileEntity.Bomber;
 import uet.oop.bomberman.entities.mobileEntity.MobileEntity;
+import uet.oop.bomberman.graphics.CreateMap;
 
 public class Checking {
 
-  public static List<immobileEntity> immobileEntities;
+//  public static List<immobileEntity> immobileEntities;
   public static List<MobileEntity> mobileEntities;
-  public static List<immobileEntity> renderImmobileEntities;
   public static boolean collisionEnemy;
 
-  public static List<item> items;
+//  public static List<item> items;
   public static int bomberLive;
   public static Bomb bomb;
   public static int[] bombExplosionReal;
@@ -35,17 +33,17 @@ public class Checking {
     list.add("up");
     list.add("down");
 
-    for (int i = 0; i < immobileEntities.size() - 1; i++) {
-      if (immobileEntities.get(i).getX() == x - 1 && immobileEntities.get(i).getY() == y) {
+    for (int i = 0; i < CreateMap.immobileEntities.size() - 1; i++) {
+      if (CreateMap.immobileEntities.get(i).getX() == x - 1 && CreateMap.immobileEntities.get(i).getY() == y) {
         list.remove("left");
       }
-      if (immobileEntities.get(i).getX() == x + 1 && immobileEntities.get(i).getY() == y) {
+      if (CreateMap.immobileEntities.get(i).getX() == x + 1 && CreateMap.immobileEntities.get(i).getY() == y) {
         list.remove("right");
       }
-      if (immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() == y - 1) {
+      if (CreateMap.immobileEntities.get(i).getX() == x && CreateMap.immobileEntities.get(i).getY() == y - 1) {
         list.remove("up");
       }
-      if (immobileEntities.get(i).getX() == x && immobileEntities.get(i).getY() == y + 1) {
+      if (CreateMap.immobileEntities.get(i).getX() == x && CreateMap.immobileEntities.get(i).getY() == y + 1) {
         list.remove("down");
       }
 
@@ -57,9 +55,9 @@ public class Checking {
       String direction) {
     double x = (double) Math.round(aX * 100) / 100;
     double y = (double) Math.round(aY * 100) / 100;
-    for (uet.oop.bomberman.entities.immobileEntity.immobileEntity immobileEntity : immobileEntities) {
+    for (uet.oop.bomberman.entities.immobileEntity.immobileEntity immobileEntity : CreateMap.immobileEntities) {
 
-      if (direction == "left") {
+      if (direction.equals("left")) {
         if ((immobileEntity.getY() > y - 1 && immobileEntity.getY() < y
             && immobileEntity.getX() < x)
             || (immobileEntity.getY() > y && immobileEntity.getY() < y + 1
@@ -71,7 +69,7 @@ public class Checking {
         }
       }
 
-      if (direction == "right") {
+      if (direction.equals("right")) {
         if (((immobileEntity.getY() > y && immobileEntity.getY() < y + 1
             && immobileEntity.getX() > x)
             || immobileEntity.getY() > y - 1 && immobileEntity.getY() < y
@@ -83,7 +81,7 @@ public class Checking {
         }
       }
 
-      if (direction == "up") {
+      if (direction.equals("up")) {
         if ((immobileEntity.getX() < x + 1
             && immobileEntity.getX() > x && immobileEntity.getY() < y) || (
             immobileEntity.getX() == x && immobileEntity.getY() < y) || (
@@ -94,7 +92,7 @@ public class Checking {
           }
         }
       }
-      if (direction == "down") {
+      if (direction.equals("down")) {
         if ((immobileEntity.getX() > x - 1 && immobileEntity.getX() < x
             && immobileEntity.getY() > y) || (immobileEntity.getX() < x + 1
             && immobileEntity.getX() > x && immobileEntity.getY() > y) || (
@@ -148,7 +146,7 @@ public class Checking {
   }
 
   public void collisionItem(double axisX, double axisY) {
-    for (uet.oop.bomberman.entities.items.item item : items) {
+    for (uet.oop.bomberman.entities.items.item item : CreateMap.item) {
       if (Collision(bomberBaby.getX(), bomberBaby.getY(), item.getX(),
           item.getY())) {
         if (item instanceof speedItem) {

@@ -53,7 +53,7 @@ public class Oneal extends MobileEntity {
     return RandomMoving.get(move);
   }
 
-  public Image balloomToLeft() {
+  public Image OnealToLeft() {
     if (Checking.CollisionMove(x, y, 0.2, 1, "left") && x > 0) {
       x = (double) Math.round((x - speed) * 10) / 10;
     }
@@ -68,7 +68,7 @@ public class Oneal extends MobileEntity {
     }
   }
 
-  public Image balloomToRight() {
+  public Image OnealToRight() {
     if (Checking.CollisionMove(x, y, 0.2, 1, "right") && x < BombermanGame.WIDTH) {
       x = (double) Math.round((x + speed) * 10) / 10;
     }
@@ -83,7 +83,7 @@ public class Oneal extends MobileEntity {
     }
   }
 
-  public Image balloomToUp() {
+  public Image OnealToUp() {
     if (Checking.CollisionMove(x, y, 0.2, 1, "up") && y > 0) {
       x = (double) Math.round((y - speed) * 10) / 10;
     }
@@ -98,7 +98,7 @@ public class Oneal extends MobileEntity {
     }
   }
 
-  public Image balloomToDown() {
+  public Image OnealToDown() {
     if (Checking.CollisionMove(x, y, 0.2, 1, "down") && y < BombermanGame.HEIGHT) {
       x = (double) Math.round((y + speed) * 10) / 10;
     }
@@ -114,7 +114,7 @@ public class Oneal extends MobileEntity {
 
   }
 
-  public Image balloomToDead() {
+  public Image OnealToDead() {
     return toDead.get(0);
   }
 
@@ -149,16 +149,16 @@ public class Oneal extends MobileEntity {
     }
     loop += 1;
     if (direction.equals("left")) {
-      img = balloomToLeft();
+      img = OnealToLeft();
     }
     if (direction.equals("right")) {
-      img = balloomToRight();
+      img = OnealToRight();
     }
     if (direction.equals("up")) {
-      img = balloomToUp();
+      img = OnealToUp();
     }
     if (direction.equals("down")) {
-      img = balloomToDown();
+      img = OnealToDown();
     }
   }
 
@@ -167,7 +167,7 @@ public class Oneal extends MobileEntity {
     if (dead) {
       countDead += 1;
       if (countDead <= 12) {
-        img = balloomToDead();
+        img = OnealToDead();
       } else {
         img = null;
       }

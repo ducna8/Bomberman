@@ -12,7 +12,7 @@ public abstract class MobileEntity extends Entity {
   protected boolean holdButton = false;
 
 
-  public MobileEntity(int x, int y, Image img) {
+  public MobileEntity(double x, double y, Image img) {
     super(x, y, img);
   }
 
@@ -29,7 +29,7 @@ public abstract class MobileEntity extends Entity {
     return dead;
   }
 
-  public void setDead(boolean life) {
+  public void setDead(boolean dead) {
     this.dead = dead;
   }
 
@@ -37,7 +37,7 @@ public abstract class MobileEntity extends Entity {
     return countDead;
   }
 
-  public void setCountDead(int count) {
+  public void setCountDead(int countDead) {
     this.countDead = countDead;
   }
 

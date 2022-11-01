@@ -9,12 +9,7 @@ import uet.oop.bomberman.graphics.Sprite;
 public class Brick extends immobileEntity {
 
   private List<Image> explodedBrick = new ArrayList<>();
-  private int runtime = 0;
   private int explodeCount = 1;
-
-  public Brick(double x, double y, Image img) {
-    super(x, y, img);
-  }
 
   public Brick(int x, int y, Image img) {
     super(x, y, img);
@@ -42,9 +37,10 @@ public class Brick extends immobileEntity {
 
   @Override
   public void update() {
-    if (difference == true) {
+    if (difference) {
       for (int i = 0; i < Checking.renderImmobileEntities.size(); i++) {
         if (Checking.renderImmobileEntities.get(i) == this) {
+          int runtime = 0;
           if (runtime == 60) {
             if (img != null) {
               explodeCount++;

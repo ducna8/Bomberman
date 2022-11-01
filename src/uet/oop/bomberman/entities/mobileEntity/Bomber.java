@@ -14,7 +14,6 @@ public class Bomber extends MobileEntity {
   public List<Image> toDown = new ArrayList<>();
   public List<Image> toDead = new ArrayList<>();
   private boolean up, down, left, right;
-  private double distance = 0.5;
 
   public Bomber(int x, int y, Image img) {
     super(x, y, img);
@@ -44,23 +43,19 @@ public class Bomber extends MobileEntity {
     return direction;
   }
 
-  @Override
   public void setDirection(String direction) {
     super.setDirection(direction);
   }
 
-  @Override
   public boolean isHoldButton() {
     return super.isHoldButton();
   }
 
-  @Override
   public void setHoldButton(boolean hold) {
     super.setHoldButton(holdButton);
   }
 
   public void setDistance(double distance) {
-    this.distance = distance;
     this.x = (int) x;
     this.y = (int) y;
   }
@@ -124,19 +119,19 @@ public class Bomber extends MobileEntity {
     if (Checking.collisionEnemy(x, y)) {
       setDead(true);
     }
-    if (dead = true) {
+    if (dead) {
       img = BomberToDead();
     } else {
-      if (direction == "up" && holdButton == true) {
+      if (direction.equals("up") && holdButton) {
         img = BomberToUp();
       }
-      if (direction == "down" && holdButton == true) {
+      if (direction.equals("down") && holdButton) {
         img = BomberToDown();
       }
-      if (direction == "left" && holdButton == true) {
+      if (direction.equals("left") && holdButton) {
         img = BomberToLeft();
       }
-      if (direction == "right" && holdButton == true) {
+      if (direction.equals("right") && holdButton) {
         img = BomberToRight();
       }
     }
