@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.mobileEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Checking;
+import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomber extends MobileEntity {
@@ -116,7 +116,7 @@ public class Bomber extends MobileEntity {
   }
 
   public void update() {
-    if (Checking.collisionEnemy(x, y)) {
+    if (CreateMap.collisionEnemy(x, y)) {
       setDead(true);
     }
     if (dead) {

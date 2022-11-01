@@ -1,12 +1,9 @@
 package uet.oop.bomberman.entities.bomb;
 
-import com.sun.org.apache.bcel.internal.generic.SWITCH;
-import java.lang.invoke.SwitchPoint;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.entities.Entity;
-import uet.oop.bomberman.graphics.Sprite;
 
 public abstract class BombExplosion extends Entity {
 

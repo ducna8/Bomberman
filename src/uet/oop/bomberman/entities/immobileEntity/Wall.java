@@ -1,7 +1,6 @@
 package uet.oop.bomberman.entities.immobileEntity;
 
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Entity;
 
 public class Wall extends immobileEntity {
 

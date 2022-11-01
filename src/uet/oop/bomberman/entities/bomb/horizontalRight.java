@@ -3,7 +3,7 @@ package uet.oop.bomberman.entities.bomb;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Checking;
+import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class horizontalRight extends BombExplosion {
@@ -31,11 +31,11 @@ public class horizontalRight extends BombExplosion {
 
   @Override
   public void update() {
-    if (!Checking.bomb.EndExploded) {
+    if (!CreateMap.bomb.EndExploded) {
       img = null;
     } else {
-      if (Checking.bombExplosionReal[1] != 1 && Checking.bombExplosionReal[1] != 2) {
-        Checking.collisionBomb(this.x, this.y);
+      if (CreateMap.bombExplosionReal[1] != 1 && CreateMap.bombExplosionReal[1] != 2) {
+        CreateMap.collisionBomb(this.x, this.y);
       }
       img = horizontalRight();
     }

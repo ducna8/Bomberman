@@ -1,10 +1,5 @@
 package uet.oop.bomberman.graphics;
 
-import static uet.oop.bomberman.entities.Checking.Collision;
-import static uet.oop.bomberman.entities.Checking.bomb;
-import static uet.oop.bomberman.entities.Checking.bombExplosionReal;
-import static uet.oop.bomberman.entities.Checking.bomberBaby;
-
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -19,7 +14,6 @@ import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Checking;
 import uet.oop.bomberman.entities.bomb.Bomb;
 import uet.oop.bomberman.entities.bomb.BombExplosion;
 import uet.oop.bomberman.entities.bomb.horizontal;
@@ -41,13 +35,14 @@ import uet.oop.bomberman.entities.mobileEntity.Bomber;
 import uet.oop.bomberman.entities.mobileEntity.MobileEntity;
 import uet.oop.bomberman.entities.mobileEntity.Oneal;
 
+
 public class CreateMap {
   public static CreateMap createMap;
   public static int level;
   public static int column;
   public static int row;
 
-//  public static List<MobileEntity> mobileEntities;
+  public static List<MobileEntity> mobileEntities;
   public static List<immobileEntity> immobileEntities;
   public static List<immobileEntity> renderImmobileEntities;
   public static List<BombExplosion> bombExplosions;
@@ -57,6 +52,12 @@ public class CreateMap {
   public static List<item> item;
   public static ArrayList<String> maps;
 
+  public static boolean collisionEnemy;
+
+  public static int bomberLive;
+  public static Bomb bomb;
+  public static int[] bombExplosionReal;
+  public static Bomber bomberBaby;
   public static boolean addUp;
   public static boolean speedUp;
   public static boolean bombUp;
@@ -86,15 +87,15 @@ public class CreateMap {
 
     immobileEntities = new ArrayList<>();
     renderImmobileEntities = new ArrayList<>();
-    Checking.mobileEntities = new ArrayList<>();
+    mobileEntities = new ArrayList<>();
     bombExplosions = new ArrayList<>();
     item = new ArrayList<>();
     maps = new ArrayList<>();
-    Checking.bombExplosionReal = new int[4];
+    bombExplosionReal = new int[4];
     addUp = true;
     speedUp = false;
     bombUp = false;
-    Checking.bomberLive = 2;
+    bomberLive = 2;
     Bomb.countBomb = 1;
     Bomb.exploded = false;
 
@@ -115,20 +116,20 @@ public class CreateMap {
       @Override
       public void handle(KeyEvent event) {
         if(event.getCode() == KeyCode.UP){
-          Checking.bomberBaby.setHoldButton(true);
-          Checking.bomberBaby.setDirection("up");
+          bomberBaby.setHoldButton(true);
+          bomberBaby.setDirection("up");
         }
         else if(event.getCode() == KeyCode.DOWN){
-          Checking.bomberBaby.setHoldButton(true);
-          Checking.bomberBaby.setDirection("down");
+          bomberBaby.setHoldButton(true);
+          bomberBaby.setDirection("down");
         }
         else if(event.getCode() == KeyCode.RIGHT){
-          Checking.bomberBaby.setHoldButton(true);
-          Checking.bomberBaby.setDirection("right");
+          bomberBaby.setHoldButton(true);
+          bomberBaby.setDirection("right");
         }
         else if(event.getCode() == KeyCode.LEFT){
-          Checking.bomberBaby.setHoldButton(true);
-          Checking.bomberBaby.setDirection("left");
+          bomberBaby.setHoldButton(true);
+          bomberBaby.setDirection("left");
         }
       }
     });
@@ -137,16 +138,16 @@ public class CreateMap {
       @Override
       public void handle(KeyEvent event) {
         if(event.getCode() == KeyCode.UP){
-          Checking.bomberBaby.setHoldButton(false);
+          bomberBaby.setHoldButton(false);
         }
         else if(event.getCode() == KeyCode.DOWN){
-          Checking.bomberBaby.setHoldButton(false);
+          bomberBaby.setHoldButton(false);
         }
         else if(event.getCode() == KeyCode.RIGHT){
-          Checking.bomberBaby.setHoldButton(false);
+          bomberBaby.setHoldButton(false);
         }
         else if(event.getCode() == KeyCode.LEFT){
-          Checking.bomberBaby.setHoldButton(false);
+          bomberBaby.setHoldButton(false);
         }
         else if(event.getCode() == KeyCode.SPACE){
           CreateMap.startBomb();
@@ -157,8 +158,8 @@ public class CreateMap {
     for(int i =0; i< maps.size();i++){
       for(int j =0; j < maps.get(1).length(); j++){
         if(maps.get(i).charAt(j) == 'p'){
-          Checking.bomberBaby = new Bomber(j,i,Sprite.player_right.getFxImage());
-          Checking.mobileEntities.add(Checking.bomberBaby);
+          bomberBaby = new Bomber(j,i,Sprite.player_right.getFxImage());
+          mobileEntities.add(bomberBaby);
         }
         else if(maps.get(i).charAt(j) == '#'){
           immobileEntity im = new Wall(j,i,Sprite.wall.getFxImage());
@@ -174,11 +175,11 @@ public class CreateMap {
         }
         else if(maps.get(i).charAt(j) == '1'){
           MobileEntity m = new Balloom(j,i,Sprite.balloom_left1.getFxImage());
-          Checking.mobileEntities.add(m);
+          mobileEntities.add(m);
         }
         else if(maps.get(i).charAt(j) == '2'){
           MobileEntity m = new Oneal(j,i,Sprite.oneal_left1.getFxImage());
-          Checking.mobileEntities.add(m);
+          mobileEntities.add(m);
         }
       }
     }
@@ -231,22 +232,22 @@ public class CreateMap {
 
     {
       int i =0;
-      while (i < Checking.mobileEntities.size()) {
-        if(Checking.mobileEntities.get(i).getImg() == null){
-          if(Checking.mobileEntities.get(i) == Checking.bomberBaby){
-            Checking.mobileEntities.remove(i);
-            Checking.bomberLive = Checking.bomberLive -1;
-            if(Checking.bomberLive > 0){
-              Checking.bomberBaby = new Bomber(1,1,Sprite.player_right.getFxImage());
+      while (i < mobileEntities.size()) {
+        if(mobileEntities.get(i).getImg() == null){
+          if(mobileEntities.get(i) == bomberBaby){
+            mobileEntities.remove(i);
+            bomberLive = bomberLive -1;
+            if(bomberLive > 0){
+              bomberBaby = new Bomber(1,1,Sprite.player_right.getFxImage());
               Bomb.countBomb = 1;
               speedUp = false;
               bombUp = false;
-              Checking.mobileEntities.add(Checking.bomberBaby);
+              mobileEntities.add(bomberBaby);
             }
           }
           else {
-            newItem(Checking.mobileEntities.get(i).getX(),Checking.mobileEntities.get(i).getY());
-            Checking.mobileEntities.remove(i);
+            newItem(mobileEntities.get(i).getX(),mobileEntities.get(i).getY());
+            mobileEntities.remove(i);
             BombermanGame.key =0;
             // WinBackground;
           }
@@ -411,6 +412,176 @@ public class CreateMap {
         }
       }
     }
+  }
+
+  public static List<String> movable(double axisX, double axisY) {
+    List<String> list = new ArrayList<>();
+
+    double x = Math.ceil(axisX * 100) / 100;
+    double y = Math.ceil(axisY * 100) / 100;
+
+    list.add("left");
+    list.add("right");
+    list.add("up");
+    list.add("down");
+
+    for (int i = 0; i < CreateMap.immobileEntities.size() - 1; i++) {
+      if (CreateMap.immobileEntities.get(i).getX() == x - 1 && CreateMap.immobileEntities.get(i).getY() == y) {
+        list.remove("left");
+      }
+      if (CreateMap.immobileEntities.get(i).getX() == x + 1 && CreateMap.immobileEntities.get(i).getY() == y) {
+        list.remove("right");
+      }
+      if (CreateMap.immobileEntities.get(i).getX() == x && CreateMap.immobileEntities.get(i).getY() == y - 1) {
+        list.remove("up");
+      }
+      if (CreateMap.immobileEntities.get(i).getX() == x && CreateMap.immobileEntities.get(i).getY() == y + 1) {
+        list.remove("down");
+      }
+
+    }
+    return list;
+  }
+
+  public static boolean CollisionMove(double aX, double aY, double range, double sizeEntity,
+      String direction) {
+    double x = (double) Math.round(aX * 100) / 100;
+    double y = (double) Math.round(aY * 100) / 100;
+    for (uet.oop.bomberman.entities.immobileEntity.immobileEntity immobileEntity : CreateMap.immobileEntities) {
+
+      if (direction.equals("left")) {
+        if ((immobileEntity.getY() > y - 1 && immobileEntity.getY() < y
+            && immobileEntity.getX() < x)
+            || (immobileEntity.getY() > y && immobileEntity.getY() < y + 1
+            && immobileEntity.getX() < x)
+            || (immobileEntity.getY() == y && immobileEntity.getX() < x)) {
+          if (((double) Math.round((x - 1 - range) * 100) / 100) < immobileEntity.getX()) {
+            return false;
+          }
+        }
+      }
+
+      if (direction.equals("right")) {
+        if (((immobileEntity.getY() > y && immobileEntity.getY() < y + 1
+            && immobileEntity.getX() > x)
+            || immobileEntity.getY() > y - 1 && immobileEntity.getY() < y
+            && immobileEntity.getX() > x)
+            || (immobileEntity.getY() == y && immobileEntity.getX() > x)) {
+          if (((double) Math.round((x + 1 + range) * 100) / 100) > immobileEntity.getX()) {
+            return false;
+          }
+        }
+      }
+
+      if (direction.equals("up")) {
+        if ((immobileEntity.getX() < x + 1
+            && immobileEntity.getX() > x && immobileEntity.getY() < y) || (
+            immobileEntity.getX() == x && immobileEntity.getY() < y) || (
+            immobileEntity.getX() > x - 1 && immobileEntity.getX() < x
+                && immobileEntity.getY() < y)) {
+          if (y - range - 1 < immobileEntity.getY()) {
+            return false;
+          }
+        }
+      }
+      if (direction.equals("down")) {
+        if ((immobileEntity.getX() > x - 1 && immobileEntity.getX() < x
+            && immobileEntity.getY() > y) || (immobileEntity.getX() < x + 1
+            && immobileEntity.getX() > x && immobileEntity.getY() > y) || (
+            immobileEntity.getX() == x && immobileEntity.getY() > y)) {
+          if (y + range + 1 > immobileEntity.getY()) {
+            return false;
+          }
+        }
+
+      }
+    }
+    return true;
+  }
+
+  public static boolean Collision(double x1, double y1, double x2, double y2) {
+    double X1 = (double) Math.round(x1 * 100) / 100;
+    double Y1 = (double) Math.round(x2 * 100) / 100;
+    double X2 = (double) Math.round(y1 * 100) / 100;
+    double Y2 = (double) Math.round(y2 * 100) / 100;
+
+    if (X2 + 1 > X1 && X2 <= X1 && Y2 + 1 > Y1 && Y2 <= Y1) {
+      return true;
+    } else if (X2 - 1 < X1 && X2 >= X1 && Y2 - 1 < Y1 && Y2 >= Y1) {
+      return true;
+    } else if (X2 + 1 > X1 && X2 <= X1 && Y2 - 1 < Y1 && Y2 >= Y1) {
+      return true;
+    } else if (X2 - 1 < X1 && X2 >= X1 && Y2 + 1 > Y1 && Y2 <= Y1) {
+      return true;
+    } else {
+      return false;
+    }
+
+  }
+
+  public static boolean collisionEnemy(double axisX, double axisY) {
+    for (MobileEntity mobileEntity : mobileEntities) {
+      if (Collision(axisX, axisY, mobileEntity.getX(), mobileEntity.getY())
+          && !(mobileEntity instanceof Bomber)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public static void collisionBomb(double axisX, double axisY) {
+    for (MobileEntity mobileEntity : mobileEntities) {
+      if (Collision(axisX, axisY, mobileEntity.getX(), mobileEntity.getY())) {
+        mobileEntity.setDead(true);
+      }
+    }
+  }
+
+  public void collisionItem(double axisX, double axisY) {
+    for (uet.oop.bomberman.entities.items.item item : CreateMap.item) {
+      if (Collision(bomberBaby.getX(), bomberBaby.getY(), item.getX(),
+          item.getY())) {
+        if (item instanceof speedItem) {
+          bomberBaby.setDistance(1.0);
+          item.setTransform(false);
+        }
+        if (item instanceof bombItem) {
+          Bomb.countBomb = 2;
+          item.setTransform(false);
+        }
+        if (item instanceof flameItem) {
+          bomberLive += 1;
+          item.setTransform(false);
+        }
+      }
+    }
+  }
+  public static boolean checkEmpty(double a, double b, double i) {
+    return (a < i && i < b) || (a > i && i > b);
+  }
+
+  public static boolean checkVertical(double x, double y){
+    for (MobileEntity mobileEntity : mobileEntities) {
+      double notMoveX = mobileEntity.getX();
+      double notMoveY = mobileEntity.getY();
+      double bomberY = bomberBaby.getY();
+      if (notMoveX == x && checkEmpty(bomberY, y, notMoveY)) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public static boolean checkHorizontal(double x, double y){
+    for (MobileEntity mobileEntity : mobileEntities) {
+      double notMoveX = mobileEntity.getX();
+      double notMoveY = mobileEntity.getY();
+      double bomberY = bomberBaby.getX();
+      if (notMoveX == x && checkEmpty(bomberY, y, notMoveY)) {
+        return false;
+      }
+    }
+    return true;
   }
 
 }

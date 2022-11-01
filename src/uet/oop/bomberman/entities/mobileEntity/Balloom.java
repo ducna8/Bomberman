@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Checking;
+import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Balloom extends MobileEntity {
@@ -43,15 +43,15 @@ public class Balloom extends MobileEntity {
   }
 
   public String RandomMoving() {
-    List<String> RandomMoving = Checking.movable(x, y);
+    List<String> RandomMoving = CreateMap.movable(x, y);
     Random random = new Random();
     int move = random.nextInt();
     return RandomMoving.get(move);
   }
 
   public Image balloomToLeft() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "left") && x > 0) {
-      x = (double) Math.round((x - 0.2) * 10) / 10;
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "left") && x > 0) {
+      x = (int) ((double) Math.round((x - 0.2) * 10) / 10);
     }
     if (img == toLeft.get(0)) {
       return toLeft.get(1);
@@ -65,8 +65,8 @@ public class Balloom extends MobileEntity {
   }
 
   public Image balloomToRight() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "right") && x < BombermanGame.WIDTH) {
-      x = (double) Math.round((x + 0.2) * 10) / 10;
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "right") && x < BombermanGame.WIDTH) {
+      x = (int) ((double) Math.round((x + 0.2) * 10) / 10);
     }
     if (img == toRight.get(0)) {
       return toRight.get(1);
@@ -80,8 +80,8 @@ public class Balloom extends MobileEntity {
   }
 
   public Image balloomToUp() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "up") && y > 0) {
-      x = (double) Math.round((y - 0.2) * 10) / 10;
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "up") && y > 0) {
+      x = (int) ((double) Math.round((y - 0.2) * 10) / 10);
     }
     if (img == toUp.get(0)) {
       return toUp.get(1);
@@ -95,8 +95,8 @@ public class Balloom extends MobileEntity {
   }
 
   public Image balloomToDown() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "down") && y < BombermanGame.HEIGHT) {
-      x = (double) Math.round((y + 0.2) * 10) / 10;
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "down") && y < BombermanGame.HEIGHT) {
+      x = (int) ((double) Math.round((y + 0.2) * 10) / 10);
     }
     if (img == toDown.get(0)) {
       return toDown.get(1);

@@ -3,8 +3,7 @@ package uet.oop.bomberman.entities.bomb;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Checking;
-import uet.oop.bomberman.entities.Entity;
+import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Bomb extends BombExplosion {
@@ -66,7 +65,7 @@ public class Bomb extends BombExplosion {
     if (timeDelay == 24) {
       EndExploded = true;
       if (timeExploded != 6) {
-        Checking.collisionBomb(this.x, this.y);
+        CreateMap.collisionBomb(this.x, this.y);
         timeExploded += 1;
         return Exploded();
       } else {

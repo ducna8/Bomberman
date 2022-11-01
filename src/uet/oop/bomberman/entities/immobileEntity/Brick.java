@@ -3,12 +3,12 @@ package uet.oop.bomberman.entities.immobileEntity;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.image.Image;
-import uet.oop.bomberman.entities.Checking;
+import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Brick extends immobileEntity {
 
-  private List<Image> explodedBrick = new ArrayList<>();
+  private final List<Image> explodedBrick = new ArrayList<>();
   private int explodeCount = 1;
 
   public Brick(int x, int y, Image img) {
@@ -38,8 +38,8 @@ public class Brick extends immobileEntity {
   @Override
   public void update() {
     if (difference) {
-      for (int i = 0; i < Checking.renderImmobileEntities.size(); i++) {
-        if (Checking.renderImmobileEntities.get(i) == this) {
+      for (int i = 0; i < CreateMap.renderImmobileEntities.size(); i++) {
+        if (CreateMap.renderImmobileEntities.get(i) == this) {
           int runtime = 0;
           if (runtime == 60) {
             if (img != null) {

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import javafx.scene.image.Image;
 import uet.oop.bomberman.BombermanGame;
-import uet.oop.bomberman.entities.Checking;
+import uet.oop.bomberman.graphics.CreateMap;
 import uet.oop.bomberman.graphics.Sprite;
 
 public class Oneal extends MobileEntity {
@@ -47,14 +47,14 @@ public class Oneal extends MobileEntity {
   }
 
   public String RandomMoving() {
-    List<String> RandomMoving = Checking.movable(x, y);
+    List<String> RandomMoving = CreateMap.movable(x, y);
     Random random = new Random();
     int move = random.nextInt();
     return RandomMoving.get(move);
   }
 
   public Image OnealToLeft() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "left") && x > 0) {
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "left") && x > 0) {
       x = (double) Math.round((x - speed) * 10) / 10;
     }
     if (img == toLeft.get(0)) {
@@ -69,7 +69,7 @@ public class Oneal extends MobileEntity {
   }
 
   public Image OnealToRight() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "right") && x < BombermanGame.WIDTH) {
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "right") && x < BombermanGame.WIDTH) {
       x = (double) Math.round((x + speed) * 10) / 10;
     }
     if (img == toRight.get(0)) {
@@ -84,7 +84,7 @@ public class Oneal extends MobileEntity {
   }
 
   public Image OnealToUp() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "up") && y > 0) {
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "up") && y > 0) {
       x = (double) Math.round((y - speed) * 10) / 10;
     }
     if (img == toUp.get(0)) {
@@ -99,7 +99,7 @@ public class Oneal extends MobileEntity {
   }
 
   public Image OnealToDown() {
-    if (Checking.CollisionMove(x, y, 0.2, 1, "down") && y < BombermanGame.HEIGHT) {
+    if (CreateMap.CollisionMove(x, y, 0.2, 1, "down") && y < BombermanGame.HEIGHT) {
       x = (double) Math.round((y + speed) * 10) / 10;
     }
     if (img == toDown.get(0)) {
@@ -128,20 +128,20 @@ public class Oneal extends MobileEntity {
       loopAgain = 10;
       speed = 0.2;
     }
-    if (Checking.bomberBaby.getX() != x && Checking.bomberBaby.getY() == y
-        && Checking.checkHorizontal(x, y) && loop == 0) {
+    if (CreateMap.bomberBaby.getX() != x && CreateMap.bomberBaby.getY() == y
+        && CreateMap.checkHorizontal(x, y) && loop == 0) {
       speed = 0.3;
       loop = 4;
-      if (x > Checking.bomberBaby.getX()) {
+      if (x > CreateMap.bomberBaby.getX()) {
         direction = "left";
       } else {
         direction = "right";
       }
-    } else if (Checking.bomberBaby.getX() == x && Checking.bomberBaby.getY() != y
-        && Checking.checkVertical(x, y) && loop == 0) {
+    } else if (CreateMap.bomberBaby.getX() == x && CreateMap.bomberBaby.getY() != y
+        && CreateMap.checkVertical(x, y) && loop == 0) {
       speed = 0.3;
       loop = 4;
-      if (y > Checking.bomberBaby.getY()) {
+      if (y > CreateMap.bomberBaby.getY()) {
         direction = "up";
       } else {
         direction = "down";
