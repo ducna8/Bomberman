@@ -1,4 +1,4 @@
-package com.carlosflorencio.bomberman.entities.mob.enemy.ai;
+package com.carlosflorencio.bomberman.entities.ai;
 
 public class AILow extends AI {
 
