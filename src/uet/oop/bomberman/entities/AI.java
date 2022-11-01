@@ -1,4 +1,4 @@
-package com.carlosflorencio.bomberman.entities.ai;
+package uet.oop.bomberman.entities.ai;
 
 import java.util.Random;
 
